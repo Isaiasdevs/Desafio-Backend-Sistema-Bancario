@@ -7,7 +7,7 @@ const bancoDeDados = {
         nome: "Social Bank",
         numero: "123",
         agencia: "0001",
-        senha: "Cubos123Bank",
+        senha: "Social123Bank",
     },
     contas: [
         // array de contas bancárias
