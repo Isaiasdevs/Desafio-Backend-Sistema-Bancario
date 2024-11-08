@@ -70,6 +70,13 @@ Lembre-se de seguir o nosso [código de conduta](CODE_OF_CONDUCT.md).
 
 [Isaias Araujo](https://github.com/Isaiasdevs)
 
+## Referências
+
+- [Node.js](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [nodemon](https://nodemon.io/)
+- [Cubos Academy](https://cubos.academy/?utm_medium=cpc&utm_source=google&utm_term=cubos%20academy&utm_campaign=Conversion+-+Search+-+Branding+-+Cubos+Academy&hsa_acc=5207290999&hsa_cam=20983879844&hsa_grp=157905447106&hsa_ad=689370262212&hsa_src=g&hsa_tgt=kwd-1212716925774&hsa_kw=cubos%20academy&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gad_source=1&gclid=Cj0KCQiA57G5BhDUARIsACgCYnxrf14GZFBS2uy7sNZOsSz8-bM9y2-0E5EZYoZ__ugzZT0Sq2DIWLEaAkCGEALw_wcB)
+
 ## Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.

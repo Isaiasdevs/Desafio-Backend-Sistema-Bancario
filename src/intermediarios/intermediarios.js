@@ -17,7 +17,7 @@ const validarSenha = (req, res, next) => {
     }
 }
 // verifica na base de dados se o email e o cpf informados existem
-const validarEmailCpf = (req, res, next) => {
+const validarEmailCpf = (req, res, next) => {   
     
     const { email, cpf } = req.body;
     const contas = bancoDeDados.contas;

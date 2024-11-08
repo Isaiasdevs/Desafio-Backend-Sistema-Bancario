@@ -1,33 +1,73 @@
 const bancoDeDados = require('../bancoDeDados');
+const { validarEmailCpf } = require('../intermediarios/intermediarios');
 
 
 const listarContas = (req, res) => {
 
-    res.send(bancoDeDados.contas);
+    res.status(200).json(bancoDeDados.contas);
 
 }
 
 const cadastrarConta = (req, res) => {
-    const { nome, cpf, nudata_de_nascimento, telefone, email, senha } = req.body;
+    const { nome, cpf, data_de_nascimento, telefone, email, senha } = req.body;
+    console.log(data_de_nascimento);
     const numero = bancoDeDados.contas.length + 1;
 
     const conta = {
         numero: numero,
         saldo: 0,
         usuario: {
-        nome,
-        cpf,
-        nudata_de_nascimento,
-        telefone,
-        email,
-        senha,
-    }
+            nome,
+            cpf,
+            data_de_nascimento,
+            telefone,
+            email,
+            senha,
+        }
 
     }
     bancoDeDados.contas.push(conta);
-    
+
     res.sendStatus(201);
 }
 
-module.exports = {listarContas, cadastrarConta};  
+
+// Atualizar usuário da conta bancária
+const atualizarConta = (req, res) => {
+
+    const { numeroConta } = req.params;
+    console.log(numeroConta);
+
+    const { nome, cpf, data_de_nascimento, telefone, email, senha } = req.body;
+
+    if (!nome && !cpf && !data_de_nascimento && !telefone && !email && !senha) {
+        res.status(400).json({ mensagem: " Todos os campos são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
+    console.log(conta);
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    // chamada da função de validação de cpf e email
+    validarEmailCpf(req, res, () => {
+
+        if (nome) conta.usuario.nome = nome;
+        if (cpf) conta.usuario.cpf = cpf;
+        if (data_de_nascimento) conta.usuario.data_de_nascimento = data_de_nascimento;
+        if (telefone) conta.usuario.telefone = telefone;
+        if (email) conta.usuario.email = email;
+        if (senha) conta.usuario.senha = senha;
+
+        res.sendStatus(200);
+    });
+}
+
+
+
+module.exports = { listarContas, cadastrarConta, atualizarConta };
 
