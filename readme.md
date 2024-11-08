@@ -68,7 +68,9 @@ Lembre-se de seguir o nosso [código de conduta](CODE_OF_CONDUCT.md).
 
 ## Autor
 
-[Isaias Araujo](https://github.com/Isaiasdevs)
+- [Github](https://github.com/Isaiasdevs)
+- [Home ](https://isaiasdevs.com)
+- [Linkedin](https://www.linkedin.com/in/isaias-ara%C3%BAjo/)
 
 ## Referências
 
