@@ -70,6 +70,12 @@ Lembre-se de seguir o nosso [código de conduta](CODE_OF_CONDUCT.md).
 
 [Isaias Araujo](https://github.com/Isaiasdevs)
 
+## Referências
+
+- [Node.js](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [nodemon](https://nodemon.io/)
+
 ## Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
