@@ -1,7 +1,10 @@
+// arquivo onde os dados serão persistidos
+
+
 
 const bancoDeDados = {
     banco: {
-        nome: "Cubos Bank",
+        nome: "Social Bank",
         numero: "123",
         agencia: "0001",
         senha: "Cubos123Bank",
@@ -19,6 +22,8 @@ const bancoDeDados = {
         // array de transferências
     ],
 }
+
+module.exports = bancoDeDados;
 
 
 
