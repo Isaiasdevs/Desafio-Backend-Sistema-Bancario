@@ -10,7 +10,7 @@ const listarContas = (req, res) => {
 
 const cadastrarConta = (req, res) => {
     const { nome, cpf, data_de_nascimento, telefone, email, senha } = req.body;
-    console.log(data_de_nascimento);
+    
     const numero = bancoDeDados.contas.length + 1;
 
     const conta = {
@@ -36,7 +36,7 @@ const cadastrarConta = (req, res) => {
 const atualizarConta = (req, res) => {
 
     const { numeroConta } = req.params;
-    console.log(numeroConta);
+    
 
     const { nome, cpf, data_de_nascimento, telefone, email, senha } = req.body;
 
@@ -46,7 +46,7 @@ const atualizarConta = (req, res) => {
     }
 
     const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
-    console.log(conta);
+   
 
     if (!conta) {
         res.status(404).json({ mensagem: "Conta não encontrada!" });
@@ -119,9 +119,50 @@ const depositar = (req, res) => {
 
     bancoDeDados.depositos.push(deposito);
 
-    console.log(bancoDeDados.depositos);
     
     conta.saldo += valor;
+    res.sendStatus(200);
+}
+
+const sacar = (req, res) => {
+    const { numero_conta, valor, senha } = req.body;
+
+    if (!numero_conta && !valor && !senha) {
+        res.status(400).json({ mensagem: "Valor, numero da conta e senha são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (valor <= 0) {
+        res.status(400).json({ mensagem: "O valor do saque deve ser maior que zero!" });
+        return;
+    }
+
+    if (valor > conta.saldo) {
+        res.status(400).json({ mensagem: "O valor do saque não pode ser maior que o saldo da conta!" });
+        return;
+    }
+
+    if( senha !== conta.usuario.senha) {
+        res.status(400).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    const saque = {
+        data: new Date().toISOString(),
+        numero_conta: numero_conta,
+        valor: valor,
+    }
+
+    bancoDeDados.saques.push(saque);
+
+    conta.saldo -= valor;
     res.sendStatus(200);
 }
 
@@ -131,5 +172,7 @@ const depositar = (req, res) => {
 
 
 
-module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar };
+
+
+module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar };
 
