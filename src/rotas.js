@@ -7,15 +7,18 @@ const {validarSenha, validarEmailCpf} = require('./intermediarios/intermediarios
 
 
 
-rotas.get('/listarContas', validarSenha , listarContas);
+rotas.get('/contas', validarSenha , listarContas);
 rotas.get('/contas/saldo', saldo);
 rotas.get('/contas/extrato', extrato)
-rotas.post('/cadastrarConta',validarEmailCpf, cadastrarConta);
+
+rotas.post('/contas',validarEmailCpf, cadastrarConta);
 rotas.post('/transacoes/depositar', depositar);
 rotas.post( '/transacoes/sacar',  sacar);
 rotas.post('/transacoes/transferir',  transferir);
-rotas.put('/atualizarConta/:numeroConta',  atualizarConta);
-rotas.delete('/deletarConta/:numeroConta',  deletarConta);
+
+rotas.put('/contas/:numeroConta',  atualizarConta);
+
+rotas.delete('/contas/:numeroConta',  deletarConta);
 
 
 module.exports = rotas;
