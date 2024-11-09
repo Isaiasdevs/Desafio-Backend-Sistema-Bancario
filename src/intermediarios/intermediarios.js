@@ -22,7 +22,7 @@ const validarEmailCpf = (req, res, next) => {
     const { email, cpf } = req.body;
     const contas = bancoDeDados.contas;
 
-    const conta = contas.find(conta => conta.usuario.email === email && conta.usuario.cpf === cpf);
+    const conta = contas.find(conta => conta.usuario.email === email || conta.usuario.cpf === cpf);
 
     if (!conta) {
         next();

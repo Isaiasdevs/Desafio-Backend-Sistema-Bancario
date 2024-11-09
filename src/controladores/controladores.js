@@ -217,5 +217,32 @@ const transferir = (req, res) => {
 }
 
 
-module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir };
+const saldo = (req, res) => {
+    const { numero_conta, senha } = req.query; 
+    
+
+    if (!numero_conta && !senha) {
+        res.status(400).json({ mensagem: "Numero da conta e senha são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (senha !== conta.usuario.senha) {
+        res.status(401).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    res.json({ saldo: conta.saldo });
+
+};
+
+
+
+module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir, saldo };
 
