@@ -242,7 +242,54 @@ const saldo = (req, res) => {
 
 };
 
+const extrato = (req, res) => {
+    const { numero_conta, senha } = req.query;
+    
+    if (!numero_conta || !senha) {
+        res.status(400).json({ mensagem: "Número da conta e senha são obrigatórios!" });
+        return;
+    }   
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));    
+    
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (senha !== conta.usuario.senha) {
+        res.status(401).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    // Filtrando as operações pelo número da conta
+    const depositos = bancoDeDados.depositos.filter(deposito => deposito.numero_conta === numero_conta);
+    const saques = bancoDeDados.saques.filter(saque => saque.numero_conta === numero_conta);
+    const transferenciasEnviadas = bancoDeDados.transferencias.filter(
+        transferencia => transferencia.numero_conta_origem === numero_conta
+    );
+    const transferenciasRecebidas = bancoDeDados.transferencias.filter(
+        transferencia => transferencia.numero_conta_destino === numero_conta
+    );
+
+    // Criando o extrato detalhado
+    const extratoDetalhado = {
+        depositos,
+        saques,
+        transferenciasEnviadas,
+        transferenciasRecebidas,
+    };
+
+    res.json(extratoDetalhado);
+    
+};
 
 
-module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir, saldo };
+
+
+
+
+
+
+module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir, saldo, extrato };
 
