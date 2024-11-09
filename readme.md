@@ -2,14 +2,25 @@
 
 ## Descrição
 
-Este é um desafio para novos desenvolvedores, que como eu, estão começando no mundo do desenvolvimento web. O objetivo é desenvolver um sistema de bancário simples com algumas funcionalidades básicas, como cadastrar clientes, gerenciar contas, transferências e pagamentos. 
+Este é um desafio para novos desenvolvedores, que como eu, estão começando no mundo do desenvolvimento web. O objetivo é desenvolver um sistema bancário simples com algumas funcionalidades básicas. 
+Está API possui as seguintes funcionalidades:
+
+- Criar conta bancária
+- Listar contas bancárias
+- Atualizar os dados do usuário da conta bancária
+- Excluir uma conta bancária
+- Depósitar em uma conta bancária
+- Sacar de uma conta bancária
+- Transferir valores entre contas bancárias
+- Consultar saldo da conta bancária
+- Emitir extrato bancário
 
 Os dados serão persistidos em memória, no objeto existente dentro do arquivo bancodedados.js. Todas as transações e contas bancárias deverão ser inseridas dentro deste objeto, seguindo a estrutura que já existe.
 
-Estrutura do objeto no arquivo `bancodedados.js`:
+Estrutura do objeto no arquivo `bancoDeDados.js`:
 
 ```javascript
-{
+const = bancoDeDados{
     banco: {
         nome: "Social Bank",
         numero: "123",
@@ -33,7 +44,7 @@ Estrutura do objeto no arquivo `bancodedados.js`:
 
 
 
-## Tecnologias
+## Tecnologias Utilizadas
 
 - Node.js
 - Express
@@ -50,9 +61,6 @@ Estrutura do objeto no arquivo `bancodedados.js`:
 
 Para rodar o projeto, execute o comando `npm run dev` na pasta do projeto. O projeto será executado em `http://localhost:3000`.
 
-## Como testar o projeto
-
-Não há testes para o projeto, pois não foi implementado.
 
 ## Contribuição
 
@@ -69,7 +77,7 @@ Lembre-se de seguir o nosso [código de conduta](CODE_OF_CONDUCT.md).
 ## Autor
 
 - [Github](https://github.com/Isaiasdevs)
-- [Home ](https://isaiasdevs.com)
+- [Home ](https://isaiasdevs.github.io/landing-page/)
 - [Linkedin](https://www.linkedin.com/in/isaias-ara%C3%BAjo/)
 
 ## Referências

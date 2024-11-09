@@ -3,19 +3,20 @@
 const express = require('express');
 const rotas = express();
 const {listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir, saldo, extrato} = require('./controladores/controladores');
-const {validarSenha, validarEmailCpf} = require('./intermediarios/intermediarios');
+const {validarSenhaBanco, validarEmailCpf, validarDados, validarContaBanco, validardeposito, validarSaque, validarTransferencia, validaSaldoExtrato} = require('./intermediarios/intermediarios');
 
+rotas.get('/contas', validarSenhaBanco , listarContas);
+rotas.get('/contas/saldo',validaSaldoExtrato, saldo);
+rotas.get('/contas/extrato',validaSaldoExtrato, extrato)
 
+rotas.post('/contas', validarEmailCpf, validarDados, cadastrarConta);
+rotas.post('/transacoes/depositar',validardeposito, depositar);
+rotas.post( '/transacoes/sacar',validarSaque,  sacar);
+rotas.post('/transacoes/transferir',  validarTransferencia, transferir);
 
-rotas.get('/listarContas', validarSenha , listarContas);
-rotas.get('/contas/saldo', saldo);
-rotas.get('/contas/extrato', extrato)
-rotas.post('/cadastrarConta',validarEmailCpf, cadastrarConta);
-rotas.post('/transacoes/depositar', depositar);
-rotas.post( '/transacoes/sacar',  sacar);
-rotas.post('/transacoes/transferir',  transferir);
-rotas.put('/atualizarConta/:numeroConta',  atualizarConta);
-rotas.delete('/deletarConta/:numeroConta',  deletarConta);
+rotas.put('/contas/:numeroConta',validarDados, validarEmailCpf, validarContaBanco,  atualizarConta);
+
+rotas.delete('/contas/:numeroConta', validarContaBanco,  deletarConta);
 
 
 module.exports = rotas;
