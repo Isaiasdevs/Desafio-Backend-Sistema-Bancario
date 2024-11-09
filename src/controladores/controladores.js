@@ -86,11 +86,37 @@ const deletarConta = (req, res) => {
     } else {
         res.status(400).json({ mensagem: "A conta só pode ser removida se o saldo for zero!" });
     }
+
+}
+
+const depositar = (req, res) => {
+
+    const { numero_conta, valor } = req.body;
     
+    if (!numero_conta && !valor) {
+        res.status(400).json({ mensagem: "Valor e numero da conta são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+
+    if (valor <= 0) {
+        res.status(400).json({ mensagem: "O valor do depósito deve ser maior que zero!" });
+        return;
+    }
+
+    conta.saldo += valor;
+    res.sendStatus(200);
 }
 
 
 
 
-module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta };
+module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar };
 
