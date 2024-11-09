@@ -48,9 +48,22 @@ const validarEmailCpf = (req, res, next) => {
 
 }
 
+const validarConta = (req, res, next) => {
+    const { numeroConta } = req.params;
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    next();
+}
 
 
 
 
 
-module.exports = { validarSenha, validarEmailCpf, validarDados };
+
+module.exports = { validarSenha, validarEmailCpf, validarDados, validarConta };

@@ -34,39 +34,18 @@ const cadastrarConta = (req, res) => {
 
 
 const atualizarConta = (req, res) => {
-
+ 
     const { numeroConta } = req.params;
     
-
     const { nome, cpf, data_de_nascimento, telefone, email, senha } = req.body;
+    
+   const contaAtualizada= bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
 
-    if (!nome && !cpf && !data_de_nascimento && !telefone && !email && !senha) {
-        res.status(400).json({ mensagem: " Todos os campos são obrigatórios!" });
-        return;
-    }
+   Object.assign(contaAtualizada.usuario, { nome, cpf, data_de_nascimento, telefone, email, senha });// object assign é uma função que permite atualizar um objeto com outro objeto
 
-    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
-   
+   res.status(204).send();
 
-    if (!conta) {
-        res.status(404).json({ mensagem: "Conta não encontrada!" });
-        return;
-    }
-
-    // chamada da função de validação de cpf e email
-    validarEmailCpf(req, res, () => {
-
-        if (nome) conta.usuario.nome = nome;
-        if (cpf) conta.usuario.cpf = cpf;
-        if (data_de_nascimento) conta.usuario.data_de_nascimento = data_de_nascimento;
-        if (telefone) conta.usuario.telefone = telefone;
-        if (email) conta.usuario.email = email;
-        if (senha) conta.usuario.senha = senha;
-
-        res.sendStatus(200);
-    });
 }
-
 const deletarConta = (req, res) => {
 
     const { numeroConta } = req.params;
