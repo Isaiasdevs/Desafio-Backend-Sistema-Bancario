@@ -166,13 +166,56 @@ const sacar = (req, res) => {
     res.sendStatus(200);
 }
 
+const transferir = (req, res) => {
+    const { numero_conta_origem, numero_conta_destino, valor, senha } = req.body;    
+    
+    if (!numero_conta_origem && !valor && !numero_conta_destino && !senha) {
+        res.status(400).json({ mensagem: "Valor, numero da conta, numero do destinatário e senha são obrigatórios!" });
+        return;
+    }       
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta_origem));    
+    const destinatario = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta_destino));       
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (!destinatario) {
+        res.status(404).json({ mensagem: "Conta de destino não encontrada!" });
+        return;
+    }
+
+    if (valor <= 0) {
+        res.status(400).json({ mensagem: "O valor do transferência deve ser maior que zero!" });
+        return;
+    }   
+
+    if (valor > conta.saldo) {
+        res.status(400).json({ mensagem: "Saldo insuficiente!" });
+        return;
+    }
+
+    if( senha !== conta.usuario.senha) {
+        res.status(401).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    const transferencia = {
+        data: new Date().toISOString(),
+        numero_conta_origem: numero_conta_origem,
+        valor: valor,
+        numero_conta_destino: numero_conta_destino,
+    }
+
+    bancoDeDados.transferencias.push(transferencia);
+
+    conta.saldo -= valor;
+    destinatario.saldo += valor;
+    res.sendStatus(200);
+}
 
 
-
-
-
-
-
-
-module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar };
+module.exports = { listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir };
 
