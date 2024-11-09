@@ -2,7 +2,7 @@
 
 const express = require('express');
 const rotas = express();
-const {listarContas, cadastrarConta, atualizarConta} = require('./controladores/controladores');
+const {listarContas, cadastrarConta, atualizarConta, deletarConta} = require('./controladores/controladores');
 const {validarSenha, validarEmailCpf} = require('./intermediarios/intermediarios');
 
 
@@ -10,5 +10,6 @@ const {validarSenha, validarEmailCpf} = require('./intermediarios/intermediarios
 rotas.get('/listarContas', validarSenha , listarContas);
 rotas.post('/cadastrarConta',validarEmailCpf, cadastrarConta);
 rotas.put('/atualizarConta/:numeroConta',  atualizarConta);
+rotas.delete('/deletarConta/:numeroConta',  deletarConta);
 
 module.exports = rotas;
