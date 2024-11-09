@@ -121,10 +121,49 @@ const validarSaque = (req, res, next) => {
     next();
 }
 
+const validarTransferencia = (req, res, next) => {
+    const { numero_conta_origem, numero_conta_destino, valor, senha } = req.body;    
+    
+    if (!numero_conta_origem && !valor && !numero_conta_destino && !senha) {
+        res.status(400).json({ mensagem: "Valor, numero da conta, numero do destinatário e senha são obrigatórios!" });
+        return;
+    }       
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta_origem));    
+    const destinatario = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta_destino));       
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (!destinatario) {
+        res.status(404).json({ mensagem: "Conta de destino não encontrada!" });
+        return;
+    }
+
+    if (valor <= 0) {
+        res.status(400).json({ mensagem: "O valor do transferência deve ser maior que zero!" });
+        return;
+    }   
+
+    if (valor > conta.saldo) {
+        res.status(400).json({ mensagem: "Saldo insuficiente!" });
+        return;
+    }
+
+    if( senha !== conta.usuario.senha) {
+        res.status(401).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    next();
+}
 
 
 
 
 
 
-module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito, validarSaque };
+
+module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito, validarSaque, validarTransferencia };
