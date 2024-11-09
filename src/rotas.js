@@ -2,12 +2,13 @@
 
 const express = require('express');
 const rotas = express();
-const {listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir} = require('./controladores/controladores');
+const {listarContas, cadastrarConta, atualizarConta, deletarConta, depositar, sacar, transferir, saldo} = require('./controladores/controladores');
 const {validarSenha, validarEmailCpf} = require('./intermediarios/intermediarios');
 
 
 
 rotas.get('/listarContas', validarSenha , listarContas);
+rotas.get('/contas/saldo', saldo);
 rotas.post('/cadastrarConta',validarEmailCpf, cadastrarConta);
 rotas.post('/transacoes/depositar', depositar);
 rotas.post( '/transacoes/sacar',  sacar);
