@@ -92,7 +92,7 @@ const deletarConta = (req, res) => {
 const depositar = (req, res) => {
 
     const { numero_conta, valor } = req.body;
-    
+
     if (!numero_conta && !valor) {
         res.status(400).json({ mensagem: "Valor e numero da conta são obrigatórios!" });
         return;
@@ -111,9 +111,22 @@ const depositar = (req, res) => {
         return;
     }
 
+    const deposito = {
+        data: new Date().toISOString(),
+        numero_conta: numero_conta,
+        valor: valor,
+    }
+
+    bancoDeDados.depositos.push(deposito);
+
+    console.log(bancoDeDados.depositos);
+    
     conta.saldo += valor;
     res.sendStatus(200);
 }
+
+
+
 
 
 
