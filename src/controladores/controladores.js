@@ -64,23 +64,6 @@ const depositar = (req, res) => {
 
     const { numero_conta, valor } = req.body;
 
-    if (!numero_conta && !valor) {
-        res.status(400).json({ mensagem: "Valor e numero da conta são obrigatórios!" });
-        return;
-    }
-
-    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
-
-    if (!conta) {
-        res.status(404).json({ mensagem: "Conta não encontrada!" });
-        return;
-    }
-
-
-    if (valor <= 0) {
-        res.status(400).json({ mensagem: "O valor do depósito deve ser maior que zero!" });
-        return;
-    }
 
     const deposito = {
         data: new Date().toISOString(),
@@ -91,8 +74,9 @@ const depositar = (req, res) => {
     bancoDeDados.depositos.push(deposito);
 
     
-    conta.saldo += valor;
-    res.sendStatus(200);
+    bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta)).saldo += valor;
+    
+    res.status(204).send();
 }
 
 const sacar = (req, res) => {

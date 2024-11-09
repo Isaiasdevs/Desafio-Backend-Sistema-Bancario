@@ -4,7 +4,7 @@
 const bancoDeDados = require('../bancoDeDados');
 
 
-const validarSenha = (req, res, next) => {
+const validarSenhaBanco = (req, res, next) => {
     const { senha_banco } = req.query;
 
     if (!senha_banco) {
@@ -48,7 +48,7 @@ const validarEmailCpf = (req, res, next) => {
 
 }
 
-const validarConta = (req, res, next) => {
+const validarContaBanco = (req, res, next) => {
     const { numeroConta } = req.params;
 
     const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
@@ -62,8 +62,34 @@ const validarConta = (req, res, next) => {
 }
 
 
+const validardeposito = (req, res, next) => {
+    const { numero_conta, valor } = req.body;
+
+    if (!numero_conta && !valor) {
+        res.status(400).json({ mensagem: "Valor e numero da conta são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
+    
+    
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (valor <= 0) {
+        res.status(400).json({ mensagem: "O valor do depósito deve ser maior que zero!" });
+        return;
+    }
+
+    next();
+}
 
 
 
 
-module.exports = { validarSenha, validarEmailCpf, validarDados, validarConta };
+
+
+
+module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito };
