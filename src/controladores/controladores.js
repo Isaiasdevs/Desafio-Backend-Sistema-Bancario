@@ -51,16 +51,9 @@ const deletarConta = (req, res) => {
     const { numeroConta } = req.params;
 
     const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numeroConta));
-
-    if (!conta) {
-        res.status(404).json({ mensagem: "Conta não encontrada!" });
-        return;
-    }
-
-    //verificia se o saldo da conta é = 0, se sim, excluir conta informada
     if (conta.saldo === 0) {
         bancoDeDados.contas.splice(bancoDeDados.contas.indexOf(conta), 1);
-        res.sendStatus(200);
+        res.sendStatus(204);
     } else {
         res.status(400).json({ mensagem: "A conta só pode ser removida se o saldo for zero!" });
     }

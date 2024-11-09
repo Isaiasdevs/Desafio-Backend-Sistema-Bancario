@@ -18,7 +18,7 @@ rotas.post('/transacoes/transferir',  transferir);
 
 rotas.put('/contas/:numeroConta',validarDados, validarEmailCpf, validarConta,  atualizarConta);
 
-rotas.delete('/contas/:numeroConta',  deletarConta);
+rotas.delete('/contas/:numeroConta',validarConta,  deletarConta);
 
 
 module.exports = rotas;
