@@ -32,7 +32,6 @@ const cadastrarConta = (req, res) => {
     res.sendStatus(204);
 }
 
-
 const atualizarConta = (req, res) => {
  
     const { numeroConta } = req.params;
@@ -80,45 +79,18 @@ const depositar = (req, res) => {
 }
 
 const sacar = (req, res) => {
-    const { numero_conta, valor, senha } = req.body;
-
-    if (!numero_conta && !valor && !senha) {
-        res.status(400).json({ mensagem: "Valor, numero da conta e senha são obrigatórios!" });
-        return;
-    }
-
-    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
-
-    if (!conta) {
-        res.status(404).json({ mensagem: "Conta não encontrada!" });
-        return;
-    }
-
-    if (valor <= 0) {
-        res.status(400).json({ mensagem: "O valor do saque deve ser maior que zero!" });
-        return;
-    }
-
-    if (valor > conta.saldo) {
-        res.status(400).json({ mensagem: "O valor do saque não pode ser maior que o saldo da conta!" });
-        return;
-    }
-
-    if( senha !== conta.usuario.senha) {
-        res.status(400).json({ mensagem: "Senha incorreta!" });
-        return;
-    }
-
+    const { numero_conta, valor } = req.body;
+   
     const saque = {
         data: new Date().toISOString(),
         numero_conta: numero_conta,
         valor: valor,
     }
 
-    bancoDeDados.saques.push(saque);
+    bancoDeDados.saques.push(saque);   
 
-    conta.saldo -= valor;
-    res.sendStatus(200);
+    bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta)).saldo -= valor;
+    res.status(204).send();
 }
 
 const transferir = (req, res) => {
@@ -170,7 +142,6 @@ const transferir = (req, res) => {
     destinatario.saldo += valor;
     res.sendStatus(200);
 }
-
 
 const saldo = (req, res) => {
     const { numero_conta, senha } = req.query; 

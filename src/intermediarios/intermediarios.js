@@ -87,9 +87,44 @@ const validardeposito = (req, res, next) => {
 }
 
 
+const validarSaque = (req, res, next) => {
+
+    const { numero_conta, valor, senha } = req.body;
+
+    if (!numero_conta && !valor && !senha) {
+        res.status(400).json({ mensagem: "Valor, numero da conta e senha são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (valor <= 0) {
+        res.status(400).json({ mensagem: "O valor do saque deve ser maior que zero!" });
+        return;
+    }
+
+    if (valor > conta.saldo) {
+        res.status(400).json({ mensagem: "O valor do saque não pode ser maior que o saldo da conta!" });
+        return;
+    }
+
+    if( senha !== conta.usuario.senha) {
+        res.status(400).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    next();
+}
 
 
 
 
 
-module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito };
+
+
+module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito, validarSaque };
