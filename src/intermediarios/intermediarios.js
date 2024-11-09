@@ -160,10 +160,34 @@ const validarTransferencia = (req, res, next) => {
     next();
 }
 
+const validaSaldoExtrato = (req, res, next) => {
+    const { numero_conta, senha } = req.query; 
+    
+    if (!numero_conta && !senha) {
+        res.status(400).json({ mensagem: "Numero da conta e senha são obrigatórios!" });
+        return;
+    }
+
+    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
+
+    if (!conta) {
+        res.status(404).json({ mensagem: "Conta não encontrada!" });
+        return;
+    }
+
+    if (senha !== conta.usuario.senha) {
+        res.status(401).json({ mensagem: "Senha incorreta!" });
+        return;
+    }
+
+    next();
+}
 
 
 
 
 
 
-module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito, validarSaque, validarTransferencia };
+
+
+module.exports = { validarContaBanco, validarEmailCpf, validarDados, validarSenhaBanco, validardeposito, validarSaque, validarTransferencia, validaSaldoExtrato };

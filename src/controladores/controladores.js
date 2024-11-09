@@ -113,49 +113,16 @@ const transferir = (req, res) => {
 }
 
 const saldo = (req, res) => {
-    const { numero_conta, senha } = req.query; 
-    
+  
+    const { numero_conta } = req.query;
 
-    if (!numero_conta && !senha) {
-        res.status(400).json({ mensagem: "Numero da conta e senha são obrigatórios!" });
-        return;
-    }
-
-    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));
-
-    if (!conta) {
-        res.status(404).json({ mensagem: "Conta não encontrada!" });
-        return;
-    }
-
-    if (senha !== conta.usuario.senha) {
-        res.status(401).json({ mensagem: "Senha incorreta!" });
-        return;
-    }
-
-    res.json({ saldo: conta.saldo });
+    res.json({ saldo: bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta)).saldo });
 
 };
 
 const extrato = (req, res) => {
-    const { numero_conta, senha } = req.query;
-    
-    if (!numero_conta || !senha) {
-        res.status(400).json({ mensagem: "Número da conta e senha são obrigatórios!" });
-        return;
-    }   
-
-    const conta = bancoDeDados.contas.find(conta => conta.numero === Number(numero_conta));    
-    
-    if (!conta) {
-        res.status(404).json({ mensagem: "Conta não encontrada!" });
-        return;
-    }
-
-    if (senha !== conta.usuario.senha) {
-        res.status(401).json({ mensagem: "Senha incorreta!" });
-        return;
-    }
+    const { numero_conta } = req.query;
+   
 
     // Filtrando as operações pelo número da conta
     const depositos = bancoDeDados.depositos.filter(deposito => deposito.numero_conta === numero_conta);
