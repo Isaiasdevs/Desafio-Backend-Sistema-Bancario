@@ -9,7 +9,8 @@ const listarContas = (req, res) => {
 }
 
 const cadastrarConta = (req, res) => {
-    const { nome, cpf, data_de_nascimento, telefone, email, senha } = req.body;
+    
+    const usuario = req.body;
     
     const numero = bancoDeDados.contas.length + 1;
 
@@ -17,22 +18,21 @@ const cadastrarConta = (req, res) => {
         numero: numero,
         saldo: 0,
         usuario: {
-            nome,
-            cpf,
-            data_de_nascimento,
-            telefone,
-            email,
-            senha,
+            nome: usuario.nome,
+            cpf: usuario.cpf,
+            data_de_nascimento: usuario.data_de_nascimento,
+            telefone: usuario.telefone,
+            email: usuario.email,
+            senha: usuario.senha,
         }
 
     }
     bancoDeDados.contas.push(conta);
 
-    res.sendStatus(201);
+    res.sendStatus(204);
 }
 
 
-// Atualizar usuário da conta bancária
 const atualizarConta = (req, res) => {
 
     const { numeroConta } = req.params;
@@ -67,7 +67,6 @@ const atualizarConta = (req, res) => {
     });
 }
 
-// Deletar conta bancária
 const deletarConta = (req, res) => {
 
     const { numeroConta } = req.params;
