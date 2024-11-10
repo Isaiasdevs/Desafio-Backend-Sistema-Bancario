@@ -61,7 +61,6 @@ const validarContaBanco = (req, res, next) => {
     next();
 }
 
-
 const validardeposito = (req, res, next) => {
     const { numero_conta, valor } = req.body;
 
@@ -85,7 +84,6 @@ const validardeposito = (req, res, next) => {
 
     next();
 }
-
 
 const validarSaque = (req, res, next) => {
 

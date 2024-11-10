@@ -2,7 +2,10 @@
 
 ## Descrição
 
-Este é um desafio para novos desenvolvedores, que como eu, estão começando no mundo do desenvolvimento web. O objetivo é desenvolver um sistema bancário simples com algumas funcionalidades básicas. 
+Este é um desafio que foi proposto no curso de formação Backend da Cubos Academy onde desenvolvedores iniciantes, como eu,  foram desafiados a desenvolver um sistema bancário simples com algumas funcionalidades básicas. Ele é o trabalho final do segundo modulo do curso que sintetiza os conhecimentos adquiridos até então.
+
+O sistema bancário é um sistema de gerenciamento de contas bancárias que permite aos usuários criar contas bancárias, consultar saldos, transferir dinheiro entre contas, realizar saques e depósitos, emitir extratos bancários e gerenciar transações bancárias.
+
 Está API possui as seguintes funcionalidades:
 
 - Criar conta bancária
@@ -90,3 +93,6 @@ Lembre-se de seguir o nosso [código de conduta](CODE_OF_CONDUCT.md).
 ## Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+###### A META É SER MENOS QUE BURRO A CADA DIA. HOJE SOU MENOS BURRO QUE ONTEM E MAIS BURRO QUE AMANHÃ!  
+###### ESTUDE!
